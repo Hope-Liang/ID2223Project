@@ -11,7 +11,7 @@ The dataset we are using can be easily obtained from [San Francisco goverment Op
 
 Up to now the dataset contains around 670K data entries and 26 columns, with each row being a incident record.
 
-The way to get access to is to 
+The dataset API is free to use with an [instruction manual](https://dev.socrata.com/foundry/data.sfgov.org/wg3w-h783). A free [App Token](https://data.sfgov.org/profile/edit/developer_settings) has to be registered and a [sodapy](https://github.com/xmunoz/sodapy) package needs to be installed. All the historical data is available by setting `limit=800000` which is a value larger than the current data size.
 
 
 ### Methodology
