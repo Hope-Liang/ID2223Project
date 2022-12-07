@@ -3,7 +3,7 @@ KTH Course ID2223 Project Authors: Khalid El Yaacoub, Xinyu Liang
 
 ## Proposal
 
-We plan to 
+In this project, we are planning to build a serverless ML system that classifies the incident category with other information in the database such as time, location, resolution.
 
 ### Dataset
 
@@ -15,3 +15,11 @@ The dataset API is free to use with an [instruction manual](https://dev.socrata.
 
 
 ### Methodology
+
+We will download the newest data from the data source, make a feature pipeline and use Hopsworks as a feature store. Then we will create a feature view from it with selected features and some other preprocessing work, this feature view will be used to train a XGBoost classifier model.
+
+As the database gets updated daily, we will be able to grab new data entries and test the performance of our model with an inference pipeline.
+
+There will be two interfaces from Hugging-face, one to have an interactive UI interface for users to test the model, and a historical UI interface to visualize the historical performance of the model.
+
+
