@@ -5,3 +5,4 @@ seaborn
 dataframe-image
 modal-client
 gradio
+sodapy
