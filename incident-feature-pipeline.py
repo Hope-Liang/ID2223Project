@@ -23,7 +23,7 @@ def g():
     results = client.get("wg3w-h783", limit=800000)
     # Convert to pandas DataFrame
     incident_df = pd.DataFrame.from_records(results)
-    incident_df.drop(columns=['incident_date','report_datetime','row_id','incident_id','incident_number', 
+    incident_df.drop(columns=['incident_date','incident_time','incident_year','report_datetime','row_id','incident_id','incident_number', 
                          'report_type_description','filed_online','incident_code','incident_subcategory',
                          'incident_description','resolution','cad_number','intersection','cnn','analysis_neighborhood',
                          'supervisor_district','point',':@computed_region_jwn9_ihcz',':@computed_region_26cr_cadq',
@@ -34,7 +34,7 @@ def g():
     incident_fg = fs.get_or_create_feature_group(
         name="incident_modal",
         version=1,
-        primary_key=['incident_datetime','incident_time','incident_year','incident_day_of_week','report_type_code','incident_category','police_district','latitude','longitude'], 
+        primary_key=['incident_datetime','incident_day_of_week','report_type_code','incident_category','police_district','latitude','longitude'], 
         description="Incident dataset")
     incident_fg.insert(incident_df, write_options={"wait_for_job" : False})
 
