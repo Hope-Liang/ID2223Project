@@ -21,22 +21,29 @@ def g():
 
     client = Socrata("data.sfgov.org", "gZmg4iarmENBTk1Vzsb94bnse", username="xinyulia@kth.se", password="Xw990504")
     results = client.get("wg3w-h783", limit=800000)
-    # Convert to pandas DataFrame
-    incident_df = pd.DataFrame.from_records(results)
-    incident_df.drop(columns=['incident_date','incident_time','incident_year','report_datetime','row_id','incident_id','incident_number', 
-                         'report_type_description','filed_online','incident_code','incident_subcategory',
-                         'incident_description','resolution','cad_number','intersection','cnn','analysis_neighborhood',
-                         'supervisor_district','point',':@computed_region_jwn9_ihcz',':@computed_region_26cr_cadq',
-                         ':@computed_region_qgnn_b9vv',':@computed_region_nqbw_i6c3',':@computed_region_h4ep_8xdi',
-                         ':@computed_region_n4xg_c4py',':@computed_region_jg9y_a9du'], inplace=True)
-    incident_df.dropna(inplace=True)
+    incident_df = pd.DataFrame.from_records(results) # Convert to pandas DataFrame
+    
+    from preprocessor_pipeline import preprocessing_incident
+    incident_df_preprocessed = preprocessing_incident(incident_df)
 
     incident_fg = fs.get_or_create_feature_group(
         name="incident_modal",
         version=1,
-        primary_key=['incident_datetime','incident_day_of_week','report_type_code','incident_category','police_district','latitude','longitude'], 
+        primary_key=['incident_day_of_week_Friday', 'incident_day_of_week_Monday',
+       'incident_day_of_week_Saturday', 'incident_day_of_week_Sunday',
+       'incident_day_of_week_Thursday', 'incident_day_of_week_Tuesday',
+       'incident_day_of_week_Wednesday', 'report_type_code_II',
+       'report_type_code_IS', 'report_type_code_VI', 'report_type_code_VS',
+       'police_district_Bayview', 'police_district_Central',
+       'police_district_Ingleside', 'police_district_Mission',
+       'police_district_Northern', 'police_district_OutOfSF',
+       'police_district_Park', 'police_district_Richmond',
+       'police_district_Southern', 'police_district_Taraval',
+       'police_district_Tenderloin', 'incident_datetime',
+       'latitude', 'longitude', 'incident_month', 'incident_year',
+       'incident_hour'], 
         description="Incident dataset")
-    incident_fg.insert(incident_df, write_options={"wait_for_job" : False})
+    incident_fg.insert(incident_df_preprocessed, write_options={"wait_for_job" : False})
 
 if __name__ == "__main__":
     if LOCAL == True :
