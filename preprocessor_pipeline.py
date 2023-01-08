@@ -28,6 +28,73 @@ def merge_category(x):
     else:
         return x
 
+def merge_category_2(x):
+    if x == "Gambling":
+        return "Other"
+    elif x == "Homicide":
+        return "Other"
+    elif x == "Human Trafficking":
+        return "Other"
+    elif x == "Liquor Laws":
+        return "Other"
+    elif x == "Other Miscellaneous":
+        return "Other"
+    elif x == "Weapons Carrying Etc":
+        return "Weapons Offense"
+    elif x == "Offences Against The Family And Children":
+        return "Other Offenses"
+    elif x == "Sex Offense":
+        return "Other Offenses"
+    elif x == "Prostitution":
+        return "Other"
+    elif x == "Case Closure":
+        return "Other"
+    elif x == "Courtesy Report":
+        return "Other"
+    elif x == "Fire Report":
+        return "Other"
+    elif x == "Suicide":
+        return "Other"
+    elif x == "Embezzlement":
+        return "Financial Offense"
+    elif x == "Forgery And Counterfeiting":
+        return "Financial Offense"
+    elif x == "Fraud":
+        return "Financial Offense"
+    elif x == "Lost Property":
+        return "Financial Offense"
+    elif x == "Stolen Property":
+        return "Financial Offense"
+    elif x == "Motor Vehicle Theft":
+        return "Traffic and Vehicle Offense"
+    elif x == "Recovered Vehicle":
+        return "Traffic and Vehicle Offense"
+    elif x == "Traffic Collision":
+        return "Traffic and Vehicle Offense"
+    elif x == "Traffic Violation Arrest":
+        return "Traffic and Vehicle Offense"
+    elif x == "Vehicle Impounded":
+        return "Traffic and Vehicle Offense"
+    elif x == "Vehicle Misplaced":
+        return "Traffic and Vehicle Offense"
+    elif x == "Civil Sidewalks":
+        return "Traffic and Vehicle Offense"
+    elif x == "Burglary":
+        return "Theft and Robbery"
+    elif x == "Larceny Theft":
+        return "Theft and Robbery"
+    elif x == "Robbery":
+        return "Theft and Robbery"
+    elif x == "Arson":
+        return "Assault"
+    elif x == "Disorderly Conduct":
+        return "Other Offenses"
+    elif x == "Vandalism":
+        return "Malicious Mischief"
+    elif x == "Miscellaneous Investigation":
+        return "Suspicious"
+    else:
+        return x
 
 def get_feature_out(estimator, feature_in):
     if hasattr(estimator, 'get_feature_names'):
@@ -82,7 +149,7 @@ def preprocessing_incident(incident_df):
 
     # step 3: merging labels
     incident_df['incident_category']=incident_df['incident_category'].apply(merge_category)
-
+    incident_df['incident_category']=incident_df['incident_category'].apply(merge_category_2)
     
     # step 4: onehot encoding using column Transformer Settings
 

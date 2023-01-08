@@ -11,6 +11,13 @@ if LOCAL == False:
    def f():
        g()
 
+def balance(X_train, y_train):
+    indices = list(y_train[y_train['incident_category'] == 'Theft and Robbery'].index)
+    indices_to_keep = indices[:int(0.50 * len(indices))]
+    X_train.drop(index=indices_to_keep, inplace=True)
+    y_train.drop(index=indices_to_keep, inplace=True)
+    return X_train, y_train
+
 
 def g():
     import hopsworks
@@ -50,19 +57,29 @@ def g():
     X_test.drop(columns=['incident_datetime'], inplace=True)
 
     # Train our model with the Scikit-learn K-nearest-neighbors algorithm using our features (X_train) and labels (y_train)
+    #from sklearn.utils import class_weight
+    #classes_weights = class_weight.compute_sample_weight(class_weight='balanced',y=y_train.values.ravel())
+    X_train, y_train = balance(X_train, y_train)
     model = xgb.XGBClassifier()
     model.fit(X_train, y_train.values.ravel())
+    #model.fit(X_train, y_train.values.ravel(), sample_weight=classes_weights)
 
     # Evaluate model performance using the features from the test set (X_test)
     y_pred = model.predict(X_test)
 
     # Compare predictions (y_pred) with the labels in the test set (y_test)
     metrics = classification_report(y_test, y_pred, output_dict=True)
-    results = confusion_matrix(y_test, y_pred, labels=["Assault","Larceny Theft","Malicious Mischief"])
+    results = confusion_matrix(y_test, y_pred)
 
     # Create the confusion matrix as a figure, we will later store it as a PNG image file
-    df_cm = pd.DataFrame(results, ['True Assault', 'True Larceny Theft', 'True Malicious Mischief'],
-                         ['Pred Assault', 'Pred Larceny Theft', 'Pred Malicious Mischief'])
+    df_cm = pd.DataFrame(results, ['True Assault', 'True Drug Offense', 'True Financial Offense', 'True Malicious Mischief', 'True Missing Person',
+        'True Non-Criminal', 'True Other', 'True Other Offenses', 'True Suspicious', 'True Theft and Robbery', 'True Traffic and Vehicle Offense',
+        'True Warrant', 'True Weapons Offense'],
+                         ['Pred Assault', 'Pred Drug Offense', 'Pred Financial Offense','Pred Malicious Mischief', 'Pred Missing Person',
+        'Pred Non-Criminal', 'Pred Other', 'Pred Other Offenses', 'Pred Suspicious', 'Pred Theft and Robbery', 'Pred Traffic and Vehicle Offense',
+        'Pred Warrant', 'Pred Weapons Offense'])
+    import matplotlib.pyplot as plt
+    plt.figure(figsize = (10,10))  
     cm = sns.heatmap(df_cm, annot=True)
     fig = cm.get_figure()
 
