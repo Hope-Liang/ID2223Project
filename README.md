@@ -26,19 +26,19 @@ We wrote the feature pipeline in [incident-feature-pipeline.py](https://github.c
 
 ### Training Pipeline
 
-We the trained a XGBoost model with [incident-training-pipeline.py](https://github.com/Hope-Liang/ID2223Project/blob/main/incident-training-pipeline.py), which reads the data from the feature store and creates a feature view. The train-test-split-ratio is set to be 80%-20%, and 
+We the trained a XGBoost model with [incident-training-pipeline.py](https://github.com/Hope-Liang/ID2223Project/blob/main/incident-training-pipeline.py), which reads the data from the feature store and creates a feature view. The train-test-split-ratio is set to be 80%-20%, and we tried to introduce data balancing to help improve performance. The final model gives 50.3% accuracy on the test set, and a confusion matrix can be found [here](https://github.com/Hope-Liang/ID2223Project/blob/main/incident_model/confusion_matrix.png).
 
-
-### Inference Pipeline
-
+We tried several other ways to improve the model accuracy including not grouping the labels together and use weighted training. Both methods give decreasing accuracy and we didn't use in the end. We believe the model performance can be further improved using deep learning methods or having more information with stronger predictive power, as the model only had access to the time and location information.
 
 
 ## Deliverables
 
-### Predictions on Latest Data Monitor UI
+In this project, we created Two UIs to be delivered. One interactive UI where users can input feature values to obtain a prediction for the incident category, and another dashboard monitor UI showing the most recent (100) predictions obtained for the San Francisco Incident Report data, which is updated daily, as well as the true label for the incident category.
 
+### Predictions on Latest Data Monitor UI (Inference Pipeline)
 
+To create the data monitor dashboard UI, we used Hugging Face spaces and created an application file that downloads the most recent version of the dataset using the API. The data is then preprocessed using the same steps as the preprocessing of the training data. Finally, the trained model is obtained from the model registry from Hopsworks and predictions are obtained for the 100 most recent incidents, which are then shown along with their true labels on the UI.
 
 ### Interactive UI
 
-
+To create the interactive dashboard UI, we again used Hugging Face spaces and created an application file that loads the trained model from Hopsworks and then predicts the incident category based on the inputted features by the user. An image of the incident category is then shown visually to the user.
