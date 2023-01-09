@@ -37,8 +37,8 @@ In this project, we created Two UIs to be delivered. One interactive UI where us
 
 ### Predictions on Latest Data Monitor UI (Inference Pipeline)
 
-To create the data monitor dashboard UI, we used Hugging Face spaces and created an application file that downloads the most recent version of the dataset using the API. The data is then preprocessed using the same steps as the preprocessing of the training data. Finally, the trained model is obtained from the model registry from Hopsworks and predictions are obtained for the 100 most recent incidents, which are then shown along with their true labels on the UI.
+To create the [data monitor dashboard UI](https://huggingface.co/spaces/HopeLiang/hugging-face-project), we used Hugging Face spaces and created an application file that downloads the most recent version of the dataset using the API. The data is then preprocessed using the same steps as the preprocessing of the training data. Finally, the trained model is obtained from the model registry from Hopsworks and predictions are obtained for the 100 most recent incidents, which are then shown along with their true labels on the UI.
 
 ### Interactive UI
 
-To create the interactive dashboard UI, we again used Hugging Face spaces and created an application file that loads the trained model from Hopsworks and then predicts the incident category based on the inputted features by the user. An image of the incident category is then shown visually to the user.
+To create the [interactive dashboard UI](https://huggingface.co/spaces/khalidey/ID2223_Project_Incident_Prediction), we again used Hugging Face spaces and created an application file that loads the trained model from Hopsworks and then predicts the incident category based on the inputted features by the user. An image of the incident category is then shown visually to the user.
