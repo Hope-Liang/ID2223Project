@@ -43,8 +43,8 @@ def g():
     try: 
         feature_view = fs.get_feature_view(name="incident_modal", version=1)
     except:
-        iris_fg = fs.get_feature_group(name="incident_modal", version=1)
-        query = iris_fg.select_all()
+        incident_fg = fs.get_feature_group(name="incident_modal", version=1)
+        query = incident_fg.select_all()
         feature_view = fs.create_feature_view(name="incident_modal",
                                           version=1,
                                           description="Read from Incident dataset",
@@ -79,21 +79,21 @@ def g():
         'Pred Non-Criminal', 'Pred Other', 'Pred Other Offenses', 'Pred Suspicious', 'Pred Theft and Robbery', 'Pred Traffic and Vehicle Offense',
         'Pred Warrant', 'Pred Weapons Offense'])
     import matplotlib.pyplot as plt
-    plt.figure(figsize = (10,10))  
-    cm = sns.heatmap(df_cm, annot=True)
+    plt.figure(figsize = (15,15))  
+    cm = sns.heatmap(df_cm, annot=True, fmt='d')
     fig = cm.get_figure()
 
     # We will now upload our model to the Hopsworks Model Registry. First get an object for the model registry.
     mr = project.get_model_registry()
     
-    # The contents of the 'iris_model' directory will be saved to the model registry. Create the dir, first.
+    # The contents of the 'incident_model' directory will be saved to the model registry. Create the dir, first.
     model_dir="incident_model"
     if os.path.isdir(model_dir) == False:
         os.mkdir(model_dir)
 
     # Save both our model and the confusion matrix to 'model_dir', whose contents will be uploaded to the model registry
     joblib.dump(model, model_dir + "/incident_model.pkl")
-    fig.savefig(model_dir + "/confusion_matrix.png")    
+    fig.savefig(model_dir + "/confusion_matrix.png", bbox_inches='tight', dpi=300)    
 
 
     # Specify the schema of the model's input/output using the features (X_train) and labels (y_train)
@@ -102,7 +102,7 @@ def g():
     model_schema = ModelSchema(input_schema, output_schema)
 
     # Create an entry in the model registry that includes the model's name, desc, metrics
-    iris_model = mr.python.create_model(
+    incident_model = mr.python.create_model(
         name="incident_modal", 
         metrics={"accuracy" : metrics['accuracy']},
         model_schema=model_schema,
@@ -110,7 +110,7 @@ def g():
     )
     
     # Upload the model to the model registry, including all files in 'model_dir'
-    iris_model.save(model_dir)
+    incident_model.save(model_dir)
     
 if __name__ == "__main__":
     if LOCAL == True :

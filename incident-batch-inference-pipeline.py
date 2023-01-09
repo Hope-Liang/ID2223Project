@@ -90,7 +90,7 @@ def g():
         df_cm = pd.DataFrame(results, ['True Setosa', 'True Versicolor', 'True Virginica'],
                              ['Pred Setosa', 'Pred Versicolor', 'Pred Virginica'])
     
-        cm = sns.heatmap(df_cm, annot=True)
+        cm = sns.heatmap(df_cm, annot=True, fmt=".0f")
         fig = cm.get_figure()
         fig.savefig("./confusion_matrix.png")
         dataset_api.upload("./confusion_matrix.png", "Resources/images", overwrite=True)
