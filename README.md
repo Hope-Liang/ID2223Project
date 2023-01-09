@@ -22,8 +22,11 @@ The features we used to predict the incident categories are: incident year (eg. 
 
 ### Feature Pipeline
 
+We wrote the feature pipeline in [incident-feature-pipeline.py](https://github.com/Hope-Liang/ID2223Project/blob/main/incident-feature-pipeline.py), which first downloads the data from the data source, then preprocess it with the preprocessor, and lastly uploads it to [Hopsworks](https://www.hopsworks.ai) feature store. The feature store has more than 500K data entries.
 
 ### Training Pipeline
+
+We the trained a XGBoost model with [incident-training-pipeline.py](https://github.com/Hope-Liang/ID2223Project/blob/main/incident-training-pipeline.py)
 
 
 ### Inference Pipeline
