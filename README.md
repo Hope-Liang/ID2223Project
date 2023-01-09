@@ -26,7 +26,7 @@ We wrote the feature pipeline in [incident-feature-pipeline.py](https://github.c
 
 ### Training Pipeline
 
-We the trained a XGBoost model with [incident-training-pipeline.py](https://github.com/Hope-Liang/ID2223Project/blob/main/incident-training-pipeline.py)
+We the trained a XGBoost model with [incident-training-pipeline.py](https://github.com/Hope-Liang/ID2223Project/blob/main/incident-training-pipeline.py), which reads the data from the feature store and creates a feature view. The train-test-split-ratio is set to be 80%-20%, and 
 
 
 ### Inference Pipeline
