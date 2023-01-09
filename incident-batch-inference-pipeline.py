@@ -39,7 +39,7 @@ def g():
     y_pred = model.predict(batch_data)
     # print(y_pred)
     incident = y_pred[y_pred.size-1]
-    incident_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + incident + ".png"
+    incident_url = "https://raw.githubusercontent.com/Hope-Liang/ID2223Project/main/images/" + incident + ".png"
     print("Incident predicted: " + incident)
     img = Image.open(requests.get(incident_url, stream=True).raw)            
     img.save("./latest_incident.png")
@@ -50,7 +50,7 @@ def g():
     df = iris_fg.read()
     # print(df["variety"])
     label = df.iloc[-1]["incident_category"]
-    label_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + label + ".png"
+    label_url = "https://raw.githubusercontent.com/Hope-Liang/ID2223Project/main/images/" + label + ".png"
     print("Incident actual: " + label)
     img = Image.open(requests.get(label_url, stream=True).raw)            
     img.save("./actual_incident.png")
