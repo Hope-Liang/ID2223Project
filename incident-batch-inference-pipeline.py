@@ -15,6 +15,7 @@ def g():
     import hopsworks
     import joblib
     import datetime
+    import xgboost as xgb
     from PIL import Image
     from datetime import datetime
     import dataframe_image as dfi
@@ -33,36 +34,37 @@ def g():
     
     feature_view = fs.get_feature_view(name="incident_modal", version=1)
     batch_data = feature_view.get_batch_data()
+    batch_data.drop(columns=['incident_datetime'], inplace=True)
     
     y_pred = model.predict(batch_data)
     # print(y_pred)
-    flower = y_pred[y_pred.size-1]
-    flower_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + flower + ".png"
-    print("Flower predicted: " + flower)
-    img = Image.open(requests.get(flower_url, stream=True).raw)            
-    img.save("./latest_iris.png")
+    incident = y_pred[y_pred.size-1]
+    incident_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + incident + ".png"
+    print("Incident predicted: " + incident)
+    img = Image.open(requests.get(incident_url, stream=True).raw)            
+    img.save("./latest_incident.png")
     dataset_api = project.get_dataset_api()    
-    dataset_api.upload("./latest_iris.png", "Resources/images", overwrite=True)
+    dataset_api.upload("./latest_incident.png", "Resources/images", overwrite=True)
     
-    iris_fg = fs.get_feature_group(name="iris_modal", version=1)
+    iris_fg = fs.get_feature_group(name="incident_modal", version=1)
     df = iris_fg.read()
     # print(df["variety"])
-    label = df.iloc[-1]["variety"]
+    label = df.iloc[-1]["incident_category"]
     label_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + label + ".png"
-    print("Flower actual: " + label)
+    print("Incident actual: " + label)
     img = Image.open(requests.get(label_url, stream=True).raw)            
-    img.save("./actual_iris.png")
-    dataset_api.upload("./actual_iris.png", "Resources/images", overwrite=True)
+    img.save("./actual_incident.png")
+    dataset_api.upload("./actual_incident.png", "Resources/images", overwrite=True)
     
-    monitor_fg = fs.get_or_create_feature_group(name="iris_predictions",
+    monitor_fg = fs.get_or_create_feature_group(name="incident_predictions",
                                                 version=1,
                                                 primary_key=["datetime"],
-                                                description="Iris flower Prediction/Outcome Monitoring"
+                                                description="SF Incident Category Prediction/Outcome Monitoring"
                                                 )
     
     now = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     data = {
-        'prediction': [flower],
+        'prediction': [incident],
         'label': [label],
         'datetime': [now],
        }
@@ -82,8 +84,8 @@ def g():
     predictions = history_df[['prediction']]
     labels = history_df[['label']]
 
-    # Only create the confusion matrix when our iris_predictions feature group has examples of all 3 iris flowers
-    print("Number of different flower predictions to date: " + str(predictions.value_counts().count()))
+    # Only create the confusion matrix when our iris_predictions feature group has examples of all 13 different
+    print("Number of different incident categories predictions to date: " + str(predictions.value_counts().count()))
     if predictions.value_counts().count() == 3:
         results = confusion_matrix(labels, predictions)
     
