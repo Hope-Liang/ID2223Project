@@ -89,10 +89,14 @@ def g():
     if predictions.value_counts().count() == 13:
         results = confusion_matrix(labels, predictions)
     
-        df_cm = pd.DataFrame(results, ['True Setosa', 'True Versicolor', 'True Virginica'],
-                             ['Pred Setosa', 'Pred Versicolor', 'Pred Virginica'])
+        df_cm = pd.DataFrame(results, ['True Assault', 'True Drug Offense', 'True Financial Offense', 'True Malicious Mischief', 'True Missing Person',
+        'True Non-Criminal', 'True Other', 'True Other Offenses', 'True Suspicious', 'True Theft and Robbery', 'True Traffic and Vehicle Offense',
+        'True Warrant', 'True Weapons Offense'],
+                         ['Pred Assault', 'Pred Drug Offense', 'Pred Financial Offense','Pred Malicious Mischief', 'Pred Missing Person',
+        'Pred Non-Criminal', 'Pred Other', 'Pred Other Offenses', 'Pred Suspicious', 'Pred Theft and Robbery', 'Pred Traffic and Vehicle Offense',
+        'Pred Warrant', 'Pred Weapons Offense'])
     
-        cm = sns.heatmap(df_cm, annot=True, fmt=".0f")
+        cm = sns.heatmap(df_cm, annot=True, fmt="d")
         fig = cm.get_figure()
         fig.savefig("./confusion_matrix.png")
         dataset_api.upload("./confusion_matrix.png", "Resources/images", overwrite=True)
