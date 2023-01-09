@@ -16,9 +16,9 @@ We downloaded the newest data from the data source on Jan 8th, 2023. It containe
 
 We preprocessed the raw data in [preprocessor_pipeline.py](https://github.com/Hope-Liang/ID2223Project/blob/main/preprocessor_pipeline.py), which starts at dropping irrelavent columns and rows containing null values. We did this because we found that only around 1-2 percent of the rows have missing values, and the information in many columns doesn't have any predictive power.
 
-Then we extracted the year, month and hour information from the incident_datetime column, and we merged the 49 categories into 13 categories based on our understanding of the data.
+Then we extracted the year, month and hour information from the incident_datetime column, and we merged the 49 categories into 13 categories based on our understanding of the data. Lastly we one-hot encoded the incident_day_of_week, report_type_code and police_district.
 
-Lastly we one-hot encoded the incident_day_of_week, report_type_code and police_district.
+The features we used to predict the incident categories are: incident year (eg. 2018), month (1-12), hour (0-23), day of week (e.g. Monday), report type code, police district, longitude, latitude, and the column to be predicted is incident category (having 13 categories).
 
 ### Feature Pipeline
 
