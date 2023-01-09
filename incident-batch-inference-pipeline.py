@@ -86,7 +86,7 @@ def g():
 
     # Only create the confusion matrix when our iris_predictions feature group has examples of all 13 different
     print("Number of different incident categories predictions to date: " + str(predictions.value_counts().count()))
-    if predictions.value_counts().count() == 3:
+    if predictions.value_counts().count() == 13:
         results = confusion_matrix(labels, predictions)
     
         df_cm = pd.DataFrame(results, ['True Setosa', 'True Versicolor', 'True Virginica'],
@@ -97,8 +97,8 @@ def g():
         fig.savefig("./confusion_matrix.png")
         dataset_api.upload("./confusion_matrix.png", "Resources/images", overwrite=True)
     else:
-        print("You need 3 different flower predictions to create the confusion matrix.")
-        print("Run the batch inference pipeline more times until you get 3 different iris flower predictions") 
+        print("You need 13 different incident category predictions to create the confusion matrix.")
+        print("Run the batch inference pipeline more times until you get 13 different incident category predictions") 
 
 
 if __name__ == "__main__":
