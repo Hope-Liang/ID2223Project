@@ -79,7 +79,7 @@ def g():
         'Pred Non-Criminal', 'Pred Other', 'Pred Other Offenses', 'Pred Suspicious', 'Pred Theft and Robbery', 'Pred Traffic and Vehicle Offense',
         'Pred Warrant', 'Pred Weapons Offense'])
     import matplotlib.pyplot as plt
-    plt.figure(figsize = (15,15))  
+    plt.figure(figsize = (12,14))  
     cm = sns.heatmap(df_cm, annot=True, fmt='d')
     fig = cm.get_figure()
 
