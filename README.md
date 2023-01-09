@@ -8,14 +8,29 @@ The dataset we selected is [Police Department Incident Reports: 2018 to Present 
 
 The dataset API is free to use with an [instruction manual](https://dev.socrata.com/foundry/data.sfgov.org/wg3w-h783). A free [App Token](https://data.sfgov.org/profile/edit/developer_settings) has to be registered and a [sodapy](https://github.com/xmunoz/sodapy) package needs to be installed. All the historical data is available by setting `limit=800000` which is a value larger than the current data size.
 
-
-
-
-
 ## Methodology
 
+We downloaded the newest data from the data source on Jan 8th, 2023.
 
+### Data Preprocessing
+
+
+### Feature Pipeline
+
+
+### Training Pipeline
+
+
+### Inference Pipeline
 
 
 
 ## Deliverables
+
+### Predictions on Latest Data Monitor UI
+
+
+
+### Interactive UI
+
+
